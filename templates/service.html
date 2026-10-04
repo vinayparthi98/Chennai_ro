@@ -1,0 +1,302 @@
+{% extends "base.html" %}
+
+{% block title %}
+Service Request | Chennai RO Innovation
+{% endblock %}
+
+{% block content %}
+
+<section class="service-page">
+
+    <div class="service-container">
+
+        <!-- PAGE HEADER -->
+        <div class="service-header">
+
+            <span class="service-badge">
+                🔧 RO SERVICE
+            </span>
+
+            <h1>Service Request</h1>
+
+            <p>
+                Need RO installation, maintenance or repair?
+                Submit your service request and our team will contact you.
+            </p>
+
+        </div>
+
+
+        <!-- SUCCESS MESSAGE -->
+        {% if submitted %}
+
+        <div class="success-box">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <div>
+                <h3>Service Request Submitted!</h3>
+
+                <p>
+                    Thank you, {{ request.form.get('name', 'Customer') }}.
+                    Your service request has been received successfully.
+                </p>
+
+                <p>
+                    Our team will contact you soon.
+                </p>
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- ERROR MESSAGE -->
+        {% if error %}
+
+        <div class="error-box">
+            ⚠️ {{ error }}
+        </div>
+
+        {% endif %}
+
+
+        <!-- SERVICE FORM -->
+        {% if not submitted %}
+
+        <div class="service-card">
+
+            <div class="service-card-header">
+
+                <div class="service-icon">
+                    🔧
+                </div>
+
+                <div>
+                    <h2>Request a Service</h2>
+
+                    <p>
+                        Please provide your details below.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- IMPORTANT: FORM ACTION -->
+            <form method="POST"
+                  action="{{ url_for('service_request') }}"
+                  class="service-form">
+
+
+                <!-- NAME -->
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address <span>*</span>
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PHONE -->
+                <div class="form-group">
+
+                    <label for="phone">
+                        Phone Number <span>*</span>
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="Enter your phone number"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- SERVICE TYPE -->
+                <div class="form-group">
+
+                    <label for="service_type">
+                        Service Type <span>*</span>
+                    </label>
+
+                    <select
+                        id="service_type"
+                        name="service_type"
+                        required
+                    >
+
+                        <option value="">
+                            Select Service Type
+                        </option>
+
+                        <option value="RO Installation">
+                            RO Installation
+                        </option>
+
+                        <option value="RO Repair">
+                            RO Repair
+                        </option>
+
+                        <option value="Filter Replacement">
+                            Filter Replacement
+                        </option>
+
+                        <option value="RO Maintenance">
+                            RO Maintenance
+                        </option>
+
+                        <option value="RO Cleaning">
+                            RO Cleaning
+                        </option>
+
+                        <option value="General Service">
+                            General Service
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- ADDRESS -->
+                <div class="form-group">
+
+                    <label for="address">
+                        Service Address <span>*</span>
+                    </label>
+
+                    <textarea
+                        id="address"
+                        name="address"
+                        rows="4"
+                        placeholder="Enter your service address"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- MESSAGE -->
+                <div class="form-group">
+
+                    <label for="message">
+                        Service Requirement <span>*</span>
+                    </label>
+
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="5"
+                        placeholder="Describe your service requirement"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- SUBMIT BUTTON -->
+                <button
+                    type="submit"
+                    class="service-submit-btn"
+                >
+                    🔧 Submit Service Request
+                </button>
+
+            </form>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- SERVICE INFORMATION -->
+        <div class="service-info-grid">
+
+            <div class="service-info-card">
+
+                <div class="info-icon">
+                    🛠️
+                </div>
+
+                <h3>Professional Service</h3>
+
+                <p>
+                    Get reliable RO installation,
+                    maintenance and repair services.
+                </p>
+
+            </div>
+
+
+            <div class="service-info-card">
+
+                <div class="info-icon">
+                    💧
+                </div>
+
+                <h3>RO Maintenance</h3>
+
+                <p>
+                    Keep your water purifier working
+                    efficiently with regular maintenance.
+                </p>
+
+            </div>
+
+
+            <div class="service-info-card">
+
+                <div class="info-icon">
+                    📞
+                </div>
+
+                <h3>Quick Response</h3>
+
+                <p>
+                    Our team will contact you after
+                    receiving your service request.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

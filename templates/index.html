@@ -1,0 +1,332 @@
+{% extends "base.html" %}
+
+{% block title %}
+Chennai RO Innovation | Pure Water. Healthy Life.
+{% endblock %}
+
+
+{% block content %}
+
+<!-- =====================================================
+     HERO SECTION
+===================================================== -->
+
+<section class="hero">
+
+    <div class="hero-container">
+
+        <div class="hero-content">
+
+            <span class="hero-badge">
+                PURE WATER • HEALTHY LIFE
+            </span>
+
+            <h1>
+                Clean Water.
+                <span>Better Living.</span>
+            </h1>
+
+            <p>
+                Discover reliable RO water purifiers,
+                replacement filters and accessories
+                for your home and office.
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a href="{{ url_for('products') }}"
+                   class="btn btn-primary">
+
+                    Explore Products →
+
+                </a>
+
+
+                <a href="{{ url_for('contact') }}"
+                   class="btn btn-outline">
+
+                    Contact Us
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-image">
+
+            <img src="{{ url_for('static', filename='images/hero.png') }}"
+                 alt="RO Water Purifier">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FEATURES
+===================================================== -->
+
+<section class="features-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>WHY CHOOSE US</span>
+
+            <h2>
+                Everything You Need for Pure Water
+            </h2>
+
+            <p>
+                Reliable purification products and
+                convenient service support.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    💧
+                </div>
+
+                <h3>
+                    Pure Water
+                </h3>
+
+                <p>
+                    Multi-stage purification technology
+                    for clean and safe drinking water.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🚚
+                </div>
+
+                <h3>
+                    Easy Ordering
+                </h3>
+
+                <p>
+                    Browse products and place your
+                    order online easily.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🔧
+                </div>
+
+                <h3>
+                    Service Support
+                </h3>
+
+                <p>
+                    Installation, filter replacement
+                    and purifier maintenance support.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🛡️
+                </div>
+
+                <h3>
+                    Quality Products
+                </h3>
+
+                <p>
+                    Reliable RO products and accessories
+                    for your home and office.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FEATURED PRODUCTS
+===================================================== -->
+
+<section class="products-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>SHOP</span>
+
+            <h2>
+                Featured Products
+            </h2>
+
+            <p>
+                Explore our selected RO purifiers
+                and water purification products.
+            </p>
+
+        </div>
+
+
+        <div class="product-grid">
+
+            {% for product in featured_products %}
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="{{ url_for('static', filename='images/' + product.image) }}"
+                        alt="{{ product.name }}"
+                    >
+
+                    {% if product.stock > 0 %}
+
+                    <span class="stock-badge">
+                        In Stock
+                    </span>
+
+                    {% else %}
+
+                    <span class="stock-badge out">
+                        Out of Stock
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="product-info">
+
+                    <span class="product-category">
+                        {{ product.category }}
+                    </span>
+
+                    <h3>
+                        {{ product.name }}
+                    </h3>
+
+                    <p>
+                        {{ product.technology }}
+                    </p>
+
+
+                    <div class="product-details">
+
+                        <span>
+                            {{ product.capacity }}
+                        </span>
+
+                        <strong>
+                            ₹{{ "{:,}".format(product.price) }}
+                        </strong>
+
+                    </div>
+
+
+                    <a href="{{ url_for('product_details', product_id=product.id) }}"
+                       class="product-button">
+
+                        View Product →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <div class="center-button">
+
+            <a href="{{ url_for('products') }}"
+               class="btn btn-primary">
+
+                View All Products →
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ABOUT
+===================================================== -->
+
+<section class="about-section">
+
+    <div class="container">
+
+        <div class="about-content">
+
+            <span>
+                ABOUT CHENNAI RO
+            </span>
+
+            <h2>
+                Your Trusted Water Purification Solution
+            </h2>
+
+            <p>
+                Chennai RO Innovation provides RO water
+                purifiers, replacement filters, spare parts
+                and accessories for homes and offices.
+            </p>
+
+            <p>
+                Our online platform makes it easy to explore
+                products, compare features and place orders
+                conveniently.
+            </p>
+
+            <a href="{{ url_for('contact') }}"
+               class="btn btn-primary">
+
+                Get In Touch
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

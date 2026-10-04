@@ -1,0 +1,758 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Dashboard | Chennai RO Innovation
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-dashboard">
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <section class="admin-page-header">
+
+        <div>
+            <span class="admin-kicker">ADMIN PANEL</span>
+
+            <h1>Chennai RO Innovation</h1>
+
+            <p>
+                Manage customers, orders, products, messages and service requests.
+            </p>
+        </div>
+
+        <div class="admin-header-badge">
+            ⚙️ Administrator
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         STATISTICS
+    ====================================================== -->
+
+    <section class="admin-stats">
+
+        <!-- SALES -->
+        <div class="admin-stat-card sales-card">
+
+            <div class="stat-icon">
+                💰
+            </div>
+
+            <div class="stat-content">
+
+                <span>Total Sales</span>
+
+                <h2>
+                    ₹{{ "%.2f"|format(total_sales|float) }}
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDERS -->
+        <div class="admin-stat-card orders-card">
+
+            <div class="stat-icon">
+                📦
+            </div>
+
+            <div class="stat-content">
+
+                <span>Total Orders</span>
+
+                <h2>
+                    {{ total_orders }}
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- PENDING -->
+        <div class="admin-stat-card pending-card">
+
+            <div class="stat-icon">
+                ⏳
+            </div>
+
+            <div class="stat-content">
+
+                <span>Pending Orders</span>
+
+                <h2>
+                    {{ pending_orders }}
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- DELIVERED -->
+        <div class="admin-stat-card delivered-card">
+
+            <div class="stat-icon">
+                🚚
+            </div>
+
+            <div class="stat-content">
+
+                <span>Delivered</span>
+
+                <h2>
+                    {{ delivered_orders }}
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCTS -->
+        <div class="admin-stat-card product-card">
+
+            <div class="stat-icon">
+                💧
+            </div>
+
+            <div class="stat-content">
+
+                <span>Products</span>
+
+                <h2>
+                    {{ total_products }}
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- MESSAGES -->
+        <div class="admin-stat-card message-card">
+
+            <div class="stat-icon">
+                📩
+            </div>
+
+            <div class="stat-content">
+
+                <span>Messages</span>
+
+                <h2>
+                    {{ contact_messages|length }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         CONTACT MESSAGES
+    ====================================================== -->
+
+    <section class="admin-box">
+
+        <div class="admin-box-header">
+
+            <div>
+
+                <span class="box-kicker">
+                    CUSTOMER COMMUNICATION
+                </span>
+
+                <h2>
+                    📩 Contact Messages
+                </h2>
+
+                <p>
+                    Messages received from website customers.
+                </p>
+
+            </div>
+
+            <div class="count-badge">
+                {{ contact_messages|length }}
+            </div>
+
+        </div>
+
+
+        {% if contact_messages %}
+
+        <div class="message-grid">
+
+            {% for message in contact_messages %}
+
+            <div class="message-card">
+
+                <div class="message-top">
+
+                    <div class="message-avatar">
+                        {{ (message.name or "C")[0]|upper }}
+                    </div>
+
+                    <div class="message-customer">
+
+                        <h3>
+                            {{ message.name or "Customer" }}
+                        </h3>
+
+                        <p>
+                            {{ message.email or "Email not available" }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="message-body">
+
+                    <p>
+                        {{ message.message or "No message content." }}
+                    </p>
+
+                </div>
+
+
+                {% if message.date %}
+
+                <div class="message-date">
+                    🕒 {{ message.date }}
+                </div>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="admin-empty">
+
+            <div class="empty-icon">
+                📭
+            </div>
+
+            <h3>
+                No Contact Messages
+            </h3>
+
+            <p>
+                Customer messages will appear here when someone contacts you.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+
+
+    <!-- =====================================================
+         CUSTOMER ORDERS
+    ====================================================== -->
+
+    <section class="admin-box">
+
+        <div class="admin-box-header">
+
+            <div>
+
+                <span class="box-kicker">
+                    ORDER MANAGEMENT
+                </span>
+
+                <h2>
+                    📦 Customer Orders
+                </h2>
+
+                <p>
+                    View customer orders and delivery information.
+                </p>
+
+            </div>
+
+            <div class="count-badge">
+                {{ orders|length }}
+            </div>
+
+        </div>
+
+
+        {% if orders %}
+
+        <div class="orders-list">
+
+            {% for order in orders %}
+
+            <article class="order-card">
+
+                <!-- ORDER HEADER -->
+
+                <div class="order-header">
+
+                    <div class="customer-profile">
+
+                        <div class="customer-avatar">
+                            {{ (order.customer_name or order.name or "C")[0]|upper }}
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                {{ order.customer_name or order.name or "Customer" }}
+                            </h3>
+
+                            <span>
+                                Order #{{ order.id }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-status
+                        {% if order.status == 'Pending' %}
+                            status-pending
+                        {% elif order.status == 'Delivered' %}
+                            status-delivered
+                        {% elif order.status == 'Cancelled' %}
+                            status-cancelled
+                        {% else %}
+                            status-default
+                        {% endif %}
+                    ">
+
+                        {{ order.status or "Pending" }}
+
+                    </div>
+
+                </div>
+
+
+                <!-- CUSTOMER INFORMATION -->
+
+                <div class="order-details">
+
+                    <div class="detail-box">
+
+                        <span>
+                            📧 Email
+                        </span>
+
+                        <strong>
+                            {{ order.email or "Not provided" }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <span>
+                            📞 Phone
+                        </span>
+
+                        <strong>
+                            {{ order.phone or "Not provided" }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <span>
+                            📅 Order Date
+                        </span>
+
+                        <strong>
+                            {{ order.created_at or order.date or "-" }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <span>
+                            💰 Total Amount
+                        </span>
+
+                        <strong class="amount">
+                            ₹{{ "%.2f"|format(order.total|float) }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ADDRESS -->
+
+                {% if order.address %}
+
+                <div class="order-address">
+
+                    <span>
+                        📍 Delivery Address
+                    </span>
+
+                    <p>
+                        {{ order.address }}
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- =================================================
+                     ORDER ITEMS
+
+                     IMPORTANT:
+                     We DO NOT use order["items"] here.
+                     This prevents the builtin_function_or_method error.
+                ================================================== -->
+
+                {% if order.get('order_items') %}
+
+                <div class="order-products">
+
+                    <h4>
+                        🛒 Ordered Products
+                    </h4>
+
+                    {% for item in order.get('order_items', []) %}
+
+                    <div class="ordered-product">
+
+                        <div>
+
+                            <strong>
+                                {{ item.get('product_name', 'Product') }}
+                            </strong>
+
+                            <span>
+                                Quantity: {{ item.get('quantity', 1) }}
+                            </span>
+
+                        </div>
+
+                        <strong>
+                            ₹{{ "%.2f"|format(item.get('price', 0)|float) }}
+                        </strong>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+                {% endif %}
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="admin-empty">
+
+            <div class="empty-icon">
+                📦
+            </div>
+
+            <h3>
+                No Orders Available
+            </h3>
+
+            <p>
+                Customer orders will appear here.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SERVICE REQUESTS
+    ====================================================== -->
+
+    <section class="admin-box">
+
+        <div class="admin-box-header">
+
+            <div>
+
+                <span class="box-kicker">
+                    SERVICE MANAGEMENT
+                </span>
+
+                <h2>
+                    🔧 Service Requests
+                </h2>
+
+                <p>
+                    Manage RO installation, maintenance and service requests.
+                </p>
+
+            </div>
+
+            <div class="count-badge">
+                {{ service_requests|length }}
+            </div>
+
+        </div>
+
+
+        {% if service_requests %}
+
+        <div class="service-table-wrapper">
+
+            <table class="service-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Customer</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Date</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for service in service_requests %}
+
+                    <tr>
+
+                        <td>
+                            #{{ service.id }}
+                        </td>
+
+                        <td>
+                            <strong>
+                                {{ service.customer_name or service.name or "Customer" }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ service.email or "-" }}
+                        </td>
+
+                        <td>
+                            {{ service.phone or "-" }}
+                        </td>
+
+                        <td>
+                            {{ service.address or "-" }}
+                        </td>
+
+                        <td>
+                            {{ service.date or service.created_at or "-" }}
+                        </td>
+
+                        <td>
+
+                            <span class="service-status">
+                                {{ service.status or "Pending" }}
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="admin-empty">
+
+            <div class="empty-icon">
+                🔧
+            </div>
+
+            <h3>
+                No Service Requests
+            </h3>
+
+            <p>
+                Service requests will appear here when customers submit them.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+
+
+    <!-- =====================================================
+         PRODUCT CATALOG
+    ====================================================== -->
+
+    <section class="admin-box">
+
+        <div class="admin-box-header">
+
+            <div>
+
+                <span class="box-kicker">
+                    PRODUCT CATALOG
+                </span>
+
+                <h2>
+                    💧 Available Products
+                </h2>
+
+                <p>
+                    Products currently available in Chennai RO Innovation.
+                </p>
+
+            </div>
+
+            <div class="count-badge">
+                {{ total_products }}
+            </div>
+
+        </div>
+
+
+        {% if products %}
+
+        <div class="product-admin-grid">
+
+            {% for product in products %}
+
+            <div class="product-admin-card">
+
+                <div class="product-admin-image">
+
+                    {% if product.image %}
+
+                    <img
+                        src="{{ url_for('static', filename='images/' ~ product.image) }}"
+                        alt="{{ product.name }}"
+                    >
+
+                    {% else %}
+
+                    <div class="product-placeholder">
+                        💧
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="product-admin-content">
+
+                    <span class="product-category">
+                        RO WATER PURIFIER
+                    </span>
+
+                    <h3>
+                        {{ product.name }}
+                    </h3>
+
+                    {% if product.description %}
+
+                    <p>
+                        {{ product.description }}
+                    </p>
+
+                    {% endif %}
+
+
+                    <div class="product-admin-bottom">
+
+                        <strong>
+                            ₹{{ "%.2f"|format(product.price|float) }}
+                        </strong>
+
+                        {% if product.stock is defined %}
+
+                        <span class="stock-badge">
+                            Stock: {{ product.stock }}
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="admin-empty">
+
+            <div class="empty-icon">
+                💧
+            </div>
+
+            <h3>
+                No Products Available
+            </h3>
+
+            <p>
+                Product information will appear here.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+</div>
+
+{% endblock %}

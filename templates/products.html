@@ -1,0 +1,340 @@
+{% extends "base.html" %}
+
+{% block title %}
+Products | Chennai RO Innovation
+{% endblock %}
+
+
+{% block content %}
+
+<!-- =====================================================
+     PAGE HEADER
+===================================================== -->
+
+<section class="page-header">
+
+    <span>OUR PRODUCTS</span>
+
+    <h1>
+        RO Purifiers & Filters
+    </h1>
+
+    <p>
+        Explore RO purifiers, spare parts,
+        accessories and filter kits.
+    </p>
+
+</section>
+
+
+<!-- =====================================================
+     SEARCH & FILTER
+===================================================== -->
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="shop-toolbar">
+
+            <form
+                method="GET"
+                action="{{ url_for('products') }}"
+                class="search-box">
+
+                <input
+                    type="text"
+                    id="product-search"
+                    name="q"
+                    value="{{ request.args.get('q', '') }}"
+                    placeholder="Search RO purifier, filter, accessories..."
+                >
+
+                <button type="submit">
+                    🔍 Search
+                </button>
+
+            </form>
+
+
+            <div class="filter-bar">
+
+                <a href="{{ url_for('products') }}"
+                   class="{% if not request.args.get('category') %}active{% endif %}">
+                    All
+                </a>
+
+
+                <a href="{{ url_for(
+                    'products',
+                    category='ro'
+                ) }}"
+                class="{% if request.args.get('category') == 'ro' %}active{% endif %}">
+                    RO Purifiers
+                </a>
+
+
+                <a href="{{ url_for(
+                    'products',
+                    category='parts'
+                ) }}"
+                class="{% if request.args.get('category') == 'parts' %}active{% endif %}">
+                    Spare Parts
+                </a>
+
+
+                <a href="{{ url_for(
+                    'products',
+                    category='accessories'
+                ) }}"
+                class="{% if request.args.get('category') == 'accessories' %}active{% endif %}">
+                    Accessories
+                </a>
+
+
+                <a href="{{ url_for(
+                    'products',
+                    category='filter'
+                ) }}"
+                class="{% if request.args.get('category') == 'filter' %}active{% endif %}">
+                    Filter Kits
+                </a>
+
+
+                <a href="{{ url_for(
+                    'products',
+                    category='service'
+                ) }}"
+                class="{% if request.args.get('category') == 'service' %}active{% endif %}">
+                    Service Kits
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PRODUCTS
+===================================================== -->
+
+<section class="section products-section">
+
+    <div class="container">
+
+        <div class="product-grid">
+
+            {% for product in products %}
+
+            <div class="product-card">
+
+                <!-- PRODUCT IMAGE -->
+
+                <div class="product-image">
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='images/' + product.image
+                        ) }}"
+                        alt="{{ product.name }}"
+                    >
+
+
+                    {% if product.stock > 0 %}
+
+                    <span class="stock-badge">
+                        In Stock
+                    </span>
+
+                    {% else %}
+
+                    <span class="stock-badge out">
+                        Out of Stock
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- PRODUCT INFORMATION -->
+
+                <div class="product-info">
+
+                    <span class="product-category">
+
+                        {{ product.category }}
+
+                    </span>
+
+
+                    <h3>
+
+                        {{ product.name }}
+
+                    </h3>
+
+
+                    <p>
+
+                        {{ product.capacity }}
+
+                        • 
+
+                        {{ product.technology }}
+
+                    </p>
+
+
+                    <div class="product-details">
+
+                        <strong>
+
+                            ₹{{ "{:,}".format(product.price) }}
+
+                        </strong>
+
+                        <span>
+
+                            Stock:
+                            {{ product.stock }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- PRODUCT ACTIONS -->
+
+                    <div class="product-actions">
+
+                        <a
+                            class="btn btn-outline"
+                            href="{{ url_for(
+                                'product_details',
+                                product_id=product.id
+                            ) }}">
+
+                            Details
+
+                        </a>
+
+
+                        {% if product.stock > 0 %}
+
+                       <a
+    href="{{ url_for('add_to_cart', product_id=product.id) }}"
+    class="btn btn-primary">
+
+    🛒 Add to Cart
+
+</a>
+
+                        {% else %}
+
+                        <button
+                            type="button"
+                            class="btn"
+                            disabled>
+
+                            Out of Stock
+
+                        </button>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% else %}
+
+            <!-- NO PRODUCTS -->
+
+            <div class="empty">
+
+                <div style="font-size:50px;">
+                    🔍
+                </div>
+
+                <h2>
+                    No products found
+                </h2>
+
+                <p>
+                    Try another search or category.
+                </p>
+
+                <a
+                    href="{{ url_for('products') }}"
+                    class="btn btn-primary">
+
+                    View All Products
+
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CART LINK
+===================================================== -->
+
+<section class="cart-preview-section">
+
+    <div class="container">
+
+        <div class="cart-preview">
+
+            <div>
+
+                <span>
+                    YOUR CART
+                </span>
+
+                <h2>
+                    Ready to checkout?
+                </h2>
+
+                <p>
+                    Review your selected products
+                    and place your order.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('cart') }}"
+                class="btn btn-primary">
+
+                🛒 View Cart
+
+                <span class="cart-count">
+                    0
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

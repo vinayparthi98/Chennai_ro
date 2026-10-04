@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+        Chennai RO Innovation
+        {% endblock %}
+    </title>
+
+    <meta name="description"
+          content="Chennai RO Innovation - RO Water Purifiers, Filters and Accessories">
+
+    <!-- MAIN CSS -->
+ <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+ <style>
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+
+    /* Water background */
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.82),
+            rgba(255, 255, 255, 0.82)
+        ),
+        url("{{ url_for('static', filename='images/background.png') }}");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    min-height: 100vh;
+}
+
+
+/* Main page content */
+
+main {
+    min-height: calc(100vh - 80px);
+    padding: 30px 5%;
+}
+
+
+/* Keep cards readable */
+
+.card,
+.product-card,
+.login-box,
+.register-box,
+.contact-box,
+.admin-login-box,
+.form-container,
+.cart-container {
+    background: rgba(255, 255, 255, 0.94);
+    border-radius: 20px;
+}
+
+
+/* Optional glass effect */
+
+.glass {
+    background: rgba(255, 255, 255, 0.80);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+
+/* Footer */
+
+footer {
+    position: relative;
+    z-index: 2;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+        <a href="{{ url_for('index') }}"
+           class="logo-area">
+
+           <img src="{{ url_for('static', filename='images/logo.png') }}"
+     alt="Chennai RO Innovation Logo">
+
+            <div class="brand-text">
+
+                <h2>Chennai RO</h2>
+
+                <span>INNOVATION</span>
+
+            </div>
+
+        </a>
+
+
+        <nav class="nav-links">
+
+            <a href="{{ url_for('index') }}"
+               class="{% if active == 'home' %}active{% endif %}">
+                Home
+            </a>
+
+           <a href="{{ url_for('products') }}" 
+   class="{% if active == 'products' %}active{% endif %}"> 
+    Products 
+</a>
+
+<a href="{{ url_for('service_request') }}" 
+   class="{% if active == 'service_request' %}active{% endif %}">
+    🔧 Service
+</a>
+
+<a href="{{ url_for('contact') }}" 
+   class="{% if active == 'contact' %}active{% endif %}"> 
+    Contact 
+</a>
+
+            <a href="{{ url_for('cart') }}"
+               class="{% if active == 'cart' %}active{% endif %}">
+                🛒 Cart
+            </a>
+
+            {% if session.get('user_id') %}
+
+                <a href="{{ url_for('logout') }}">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="{{ url_for('login') }}">
+                    Login
+                </a>
+
+                <a href="{{ url_for('register') }}">
+                    Register
+                </a>
+    
+
+            {% endif %}
+
+<a href="{{ url_for('admin_login') }}">
+    Admin
+</a>
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-column">
+
+            <h2>Chennai RO Innovation</h2>
+
+            <p>
+                Quality RO water purifiers, spare parts
+                and water purification solutions.
+            </p>
+
+        </div>
+
+
+       <div class="footer-column">
+
+    <h3>Quick Links</h3>
+
+    <a href="{{ url_for('index') }}">
+        Home
+    </a>
+
+    <a href="{{ url_for('products') }}">
+        Products
+    </a>
+
+    <a href="{{ url_for('service_request') }}">
+        🔧 Service
+    </a>
+
+    <a href="{{ url_for('contact') }}">
+        Contact
+    </a>
+
+</div>
+
+
+        <div class="footer-column">
+
+            <h3>Contact</h3>
+
+            <p>📞 +91 00000 00000</p>
+
+            <p>📧 vinaydharshini@gmail.com</p>
+
+            <p>📍 Chennai, Tamil Nadu</p>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 Chennai RO Innovation.
+            All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<!-- MAIN JAVASCRIPT -->
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+
+</html>

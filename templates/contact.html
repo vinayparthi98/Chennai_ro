@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block title %}
+Contact Us | Chennai RO Innovation
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+<span>GET IN TOUCH</span>
+
+<h1>
+    Contact Chennai RO Innovation
+</h1>
+
+<p>
+    Have a question about our RO purifiers,
+    filters or services? Send us a message.
+</p>
+
+</section>
+
+<section class="section">
+
+<div class="contact-container">
+
+    <!-- CONTACT INFORMATION -->
+
+    <div class="contact-info">
+
+        <span class="contact-label">
+            CONTACT US
+        </span>
+
+        <h2>
+            We are here to help.
+        </h2>
+
+        <p>
+            Contact us for RO purifier sales,
+            filter replacement, installation,
+            maintenance and service support.
+        </p>
+
+
+        <div class="contact-item">
+
+            <div class="contact-icon">
+                📞
+            </div>
+
+            <div>
+                <h3>Phone</h3>
+                <p>
+                    +91 9500401454
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="contact-item">
+
+            <div class="contact-icon">
+                📧
+            </div>
+
+            <div>
+                <h3>Email</h3>
+                <p>
+                    chennairo104@gmail.com
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="contact-item">
+
+            <div class="contact-icon">
+                📍
+            </div>
+
+            <div>
+                <h3>Address</h3>
+                <p>
+                    #5/5, Thiruvenkandam 2nd Street,
+                    Karampakkam, Porur,
+                    Chennai - 600116
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTACT FORM -->
+
+    <div class="contact-form-card">
+
+        <span class="contact-label">
+            SEND MESSAGE
+        </span>
+
+        <h2>
+            How can we help?
+        </h2>
+
+
+        {% if submitted %}
+
+        <div class="success-message">
+
+            ✓ Your message has been sent successfully.
+
+        </div>
+
+        {% endif %}
+
+
+        <form
+            method="POST"
+            action="{{ url_for('contact') }}"
+            id="contact-form">
+
+
+            <div class="form-group">
+
+                <label for="name">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your name"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="message">
+                    Message
+                </label>
+
+                <textarea
+                    id="message"
+                    name="message"
+                    rows="6"
+                    placeholder="Enter your message"
+                    required></textarea>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary contact-submit">
+
+                Send Message →
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</section>
+
+<!-- SERVICE SECTION -->
+
+<section class="section contact-service">
+
+<div class="container">
+
+    <div class="contact-service-box">
+
+        <div>
+
+            <span>
+                RO SERVICE SUPPORT
+            </span>
+
+            <h2>
+                Need installation or maintenance?
+            </h2>
+
+            <p>
+                Request RO purifier installation,
+                filter replacement or maintenance
+                service from our service page.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('service_request') }}"
+            class="btn btn-primary">
+
+            Request Service
+
+        </a>
+
+    </div>
+
+</div>
+
+</section>
+
+{% endblock %}

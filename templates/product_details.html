@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ product.name }}
+{% endblock %}
+
+{% block content %}
+
+<section class="product-details">
+
+    <div class="details-image">
+
+        <img src="{{ url_for(
+            'static',
+            filename='images/' + product.image
+        ) }}">
+
+    </div>
+
+    <div class="details-content">
+
+        <span class="category">
+            {{ product.category }}
+        </span>
+
+        <h1>
+            {{ product.name }}
+        </h1>
+
+        <p class="details-description">
+            {{ product.description }}
+        </p>
+
+        <h2 class="price">
+            ₹{{ "%.2f"|format(product.price) }}
+        </h2>
+
+        <div class="specifications">
+
+            <div>
+                <span>Capacity</span>
+                <strong>
+                    {{ product.capacity }}
+                </strong>
+            </div>
+
+            <div>
+                <span>Technology</span>
+                <strong>
+                    {{ product.technology }}
+                </strong>
+            </div>
+
+            <div>
+                <span>Stock</span>
+                <strong>
+                    {{ product.stock }}
+                </strong>
+            </div>
+
+        </div>
+
+        {% if product.stock > 0 %}
+
+        <a class="btn primary large"
+           href="{{ url_for(
+           'add_to_cart',
+           product_id=product.id
+           ) }}">
+            🛒 Add to Cart
+        </a>
+
+        {% else %}
+
+        <button class="btn disabled">
+            Out of Stock
+        </button>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

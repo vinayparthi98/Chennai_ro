@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Orders
+{% endblock %}
+
+{% block content %}
+
+<section class="section">
+
+    <div class="container">
+
+        <h1>
+            My Orders
+        </h1>
+
+        {% for order in orders %}
+
+        <div class="order-card">
+
+            <div class="order-header">
+
+                <h3>
+                    Order #{{ order.id }}
+                </h3>
+
+                <span>
+                    {{ order.status }}
+                </span>
+
+            </div>
+
+            <p>
+                Date:
+                {{ order.created_at }}
+            </p>
+
+            <p>
+                Payment:
+                {{ order.payment_method }}
+            </p>
+
+            {% for item in order.items %}
+
+            <div class="order-item">
+
+                <span>
+                    {{ item.product_name }}
+                    × {{ item.quantity }}
+                </span>
+
+                <strong>
+                    ₹{{ "%.2f"|format(item.subtotal) }}
+                </strong>
+
+            </div>
+
+            {% endfor %}
+
+            <h3>
+                Total:
+                ₹{{ "%.2f"|format(order.total_amount) }}
+            </h3>
+
+        </div>
+
+        {% else %}
+
+        <p>
+            You have not placed any orders yet.
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

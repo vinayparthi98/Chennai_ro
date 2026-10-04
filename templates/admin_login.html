@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Login | Chennai RO Innovation
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-login-page">
+
+    <div class="admin-login-box">
+
+        <!-- ICON -->
+        <div class="admin-login-icon">
+            🔐
+        </div>
+
+        <!-- TITLE -->
+        <h1>Admin Login</h1>
+
+        <p class="login-description">
+            Login to access the Chennai RO Innovation dashboard.
+        </p>
+
+
+        <!-- ERROR MESSAGE -->
+        {% if error %}
+        <div class="login-error">
+            ⚠️ {{ error }}
+        </div>
+        {% endif %}
+
+
+        <!-- LOGIN FORM -->
+        <form method="POST"
+              action="{{ url_for('admin_login') }}">
+
+            <!-- ADMIN ID -->
+            <div class="form-group">
+
+                <label for="admin_id">
+                    Admin ID
+                </label>
+
+                <input
+                    type="text"
+                    id="admin_id"
+                    name="admin_id"
+                    placeholder="Enter Admin ID"
+                    autocomplete="username"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PASSWORD -->
+            <div class="form-group">
+
+                <label for="admin_password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="admin_password"
+                    name="admin_password"
+                    placeholder="Enter Password"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+            <!-- LOGIN BUTTON -->
+            <button
+                type="submit"
+                class="admin-login-btn">
+
+                🔐 Login to Admin Panel
+
+            </button>
+
+        </form>
+
+
+        <!-- LOGIN INFORMATION -->
+        <div class="admin-login-info">
+
+            <p>
+                🔒 Authorized administrators only
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

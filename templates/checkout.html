@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}
+Checkout
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <span>CHECKOUT</span>
+
+    <h1>
+        Complete Your Order
+    </h1>
+
+</section>
+
+<div class="checkout-container">
+
+    <form method="POST"
+          action="{{ url_for('place_order') }}"
+          class="checkout-form">
+
+        <h2>
+            Customer Details
+        </h2>
+
+        {% if error %}
+        <div class="error-message">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <label>Name</label>
+
+        <input
+            type="text"
+            name="name"
+            value="{{ session.get('user_name', '') }}"
+            required
+        >
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            name="email"
+            value="{{ session.get('user_email', '') }}"
+            required
+        >
+
+        <label>Phone</label>
+
+        <input
+            type="text"
+            name="phone"
+            required
+        >
+
+        <label>Delivery Address</label>
+
+        <textarea
+            name="address"
+            rows="5"
+            required
+        ></textarea>
+
+        <button
+            type="submit"
+            class="btn primary full">
+
+            Place Order
+
+        </button>
+
+    </form>
+
+    <div class="order-summary">
+
+        <h2>
+            Order Total
+        </h2>
+
+        <h1>
+            ₹{{ "%.2f"|format(total) }}
+        </h1>
+
+        <p>
+            Your order will be saved
+            securely in the database.
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}
