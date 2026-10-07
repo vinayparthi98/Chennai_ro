@@ -1,30 +1,27 @@
-
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import date, datetime
 from functools import wraps
 import json
-
-app = Flask(__name__)
-
-from flask import Flask, render_template, request, redirect, url_for, session
 import mysql.connector
-
 app = Flask(__name__)
-
+import os
 DB_CONFIG = {
-    "host": "localhost",
-    "user": "root",
-    "password": "9384289398",
-    "database": "chennai_ro"
+    "host": os.environ.get("DB_HOST"),
+    "port": int(os.environ.get("DB_PORT", 3306)),
+    "user": os.environ.get("DB_USER"),
+    "password": os.environ.get("DB_PASSWORD"),
+    "database": os.environ.get("DB_NAME"),
+    "ssl_disabled": False
 }
 
 def get_db_connection():
-
     return mysql.connector.connect(
         host=DB_CONFIG["host"],
+        port=DB_CONFIG["port"],
         user=DB_CONFIG["user"],
         password=DB_CONFIG["password"],
-        database=DB_CONFIG["database"]
+        database=DB_CONFIG["database"],
+        ssl_disabled=DB_CONFIG["ssl_disabled"]
     )
 
 # ============================================================
